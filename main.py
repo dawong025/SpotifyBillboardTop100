@@ -25,29 +25,29 @@ sp = spotipy.Spotify(
     auth_manager = SpotifyOAuth(
         scope = "playlist-modify-private",
         redirect_uri="https://example.com/",
-        client_id='YOUR CLIENT ID HERE',
-        client_secret='YOUR CLIENT SECRET HERE',
+        client_id="[Your client id here]'",
+        client_secret= "[Your client secret here]",
         show_dialog=True,
         cache_path="token.txt",
-        username="YOUR USERNAME HERE"
+        username="[Your username here]"
     )
 )
 user_id = sp.current_user()['id']
 song_uris = []
 
+# for item in range(0, 1):
 for item in range(0, len(song_names)):
     print(song_names[item] + " - " + artist_names[item])
-    result = sp.search(q="artist" + artist_names[item] + "track:" + song_names[item], type = "track")
-    # print(result)
-
+    # result = sp.search(q="artist:jay sean track:down", type="track")
+    result = sp.search(q=artist_names[item] + "-" + song_names[item], type = "track")
+    print(str(result["tracks"]["items"][0]['name']) + " - " + str(result["tracks"]["items"][0]["artists"][0]["name"]))
+    # print()
     try:
         uri = result["tracks"]["items"][0]["uri"]
         song_uris.append(uri)
     except IndexError:
         print(f"{song_names[item]} doesnt exist on Spotify")
 
-playlist = sp.user_playlist_create(user = user_id, name=f"{year} Test Billboard 100", public=False)
-sp.playlist_add_items(playlist_id=playlist["id"], items=song_uris)
+# playlist = sp.user_playlist_create(user = user_id, name=f"{year} Test Billboard 100", public=False)
+# sp.playlist_add_items(playlist_id=playlist["id"], items=song_uris)
 print("Success")
-
-
