@@ -23,13 +23,13 @@ artist_names = [artist.getText().strip() for artist in artist_spans]
 
 sp = spotipy.Spotify(
     auth_manager = SpotifyOAuth(
-        scope = "playlist-modify-private",
-        redirect_uri="https://example.com/",
-        client_id="[Your client id here]'",
-        client_secret= "[Your client secret here]",
+        scope = 'playlist-modify-private',
+        redirect_uri='https://example.com/',
+        client_id='',
+        client_secret='',
         show_dialog=True,
-        cache_path="token.txt",
-        username="[Your username here]"
+        cache_path='token.txt',
+        username=''
     )
 )
 user_id = sp.current_user()['id']
@@ -37,11 +37,12 @@ song_uris = []
 
 # for item in range(0, 1):
 for item in range(0, len(song_names)):
-    print(song_names[item] + " - " + artist_names[item])
+    # print(song_names[item] + " - " + artist_names[item])
+    print(artist_names[item] + " - " + song_names[item])
     # result = sp.search(q="artist:jay sean track:down", type="track")
     result = sp.search(q=artist_names[item] + "-" + song_names[item], type = "track")
-    print(str(result["tracks"]["items"][0]['name']) + " - " + str(result["tracks"]["items"][0]["artists"][0]["name"]))
-    # print()
+    print(str(result["tracks"]["items"][0]["artists"][0]["name"]) + " - " + str(result["tracks"]["items"][0]['name']))
+
     try:
         uri = result["tracks"]["items"][0]["uri"]
         song_uris.append(uri)
